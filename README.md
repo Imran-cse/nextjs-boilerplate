@@ -1,8 +1,6 @@
 # Awesome Next.js Boilerplate CLI
 
-<p align="center">
-  <img src="https://your-awesome-logo.png" alt="Awesome Next.js Boilerplate Logo" width="200">
-</p>
+
 
 ## Table of Contents
 
@@ -18,23 +16,15 @@
 
 Welcome to the Awesome Next.js Boilerplate CLI! 🚀 This CLI tool allows you to quickly set up a customized Next.js project with your preferred UI library and additional packages. Say goodbye to repetitive setup and focus on building amazing applications!
 
-![Screenshot of Awesome Next.js Boilerplate](https://your-awesome-screenshot.png)
-
 ## Installation
 
-To get started, make sure you have [Node.js](https://nodejs.org/) installed on your system. Then, simply run the following command to install the Awesome Next.js Boilerplate CLI globally:
+You can run the Awesome Next.js Boilerplate CLI directly using `npx` without the need for global installation. This way, you can quickly create your Next.js project without worrying about global package conflicts.
 
 ```bash
-npm install -g awesome-nextjs-boilerplate
+npx @imran03/nextjs-boilerplate
 ```
 
 ## Usage
-
-Once the CLI is installed, you can create a new Next.js boilerplate project by running:
-
-```bash
-awesome-nextjs-boilerplate
-```
 
 The CLI will guide you through the setup process, allowing you to choose your preferred UI library and additional packages to install.
 
@@ -59,4 +49,4 @@ This project is licensed under the [MIT License](LICENSE). Feel free to use and 
 
 ---
 
-Made with ❤️ by [Your Name](https://your-website.com)
+Made with ❤️ by [Imran Hossain](https://github.com/Imran-cse)
