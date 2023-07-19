@@ -1,5 +1,5 @@
 {
-	"name": "nextjs-boilerplate",
+	"name": "@imran03/nextjs-boilerplate",
 	"version": "1.0.0",
 	"type": "module",
 	"description": "Create a Next.js boilerplate with customizable options for UI library, Data fetching and others.",
@@ -7,9 +7,26 @@
 	"scripts": {
 		"start": "node index.js"
 	},
-	"repository": "https://github.com/Imran-cse/nextjs-boilerplate",
+	"bin": "./index.js",
+	"keywords": [
+		"nextjs",
+		"boilerplate",
+		"nextjs-boilerplate",
+		"nextjs-boilerplate-generator",
+		"nextjs-boilerplate-creator",
+		"nextjs-boilerplate-generator-cli",
+		"nextjs-boilerplate-creator-cli"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Imran-cse/nextjs-boilerplate"
+	},
+	"homepage": "https://github.com/Imran-cse/nextjs-boilerplate",
 	"author": "Imran Hossain",
-	"license": "MIT",
+	"license": "ISC",
+	"publishConfig": {
+		"access": "public"
+	},
 	"dependencies": {
 		"fs-extra": "^11.1.1",
 		"inquirer": "^9.2.8"

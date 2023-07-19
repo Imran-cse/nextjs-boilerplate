@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
@@ -47,7 +49,7 @@ async function installAdditionalDependencies(targetDir, packageChoices) {
 	}
 
 	if (packageChoices.dataFetchingLibrary === 'SWR') {
-		execSync(`npm install -D swr`, {
+		execSync(`npm install swr`, {
 			cwd: targetDir,
 			stdio: 'inherit',
 		});
@@ -93,7 +95,7 @@ async function createNextJsBoilerplate(targetDir) {
 		const initialFiles = await fs.readdir(process.cwd());
 
 		console.log('Installing the latest version of Next.js...');
-		execSync(`mkdir test`, {
+		execSync(`npx create-next-app@latest`, {
 			cwd: targetDir,
 			stdio: 'inherit',
 		});
@@ -104,12 +106,11 @@ async function createNextJsBoilerplate(targetDir) {
 		// Find the newly created project directory
 		const newProjectDirectoryName = finalFiles.find((file) => !initialFiles.includes(file));
 
-		console.log('newProjectDirectoryName', newProjectDirectoryName);
 		if (!newProjectDirectoryName) {
 			console.error('Failed to find the newly created project directory.');
 			return;
 		}
-		// await installAdditionalDependencies(newProjectDirectoryName, packageChoices);
+		await installAdditionalDependencies(newProjectDirectoryName, packageChoices);
 		await addConfigsToBoilerplate(newProjectDirectoryName);
 
 		console.log('Next.js boilerplate created successfully!');
