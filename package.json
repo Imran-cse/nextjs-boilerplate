@@ -1,0 +1,17 @@
+{
+	"name": "nextjs-boilerplate",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "Create a Next.js boilerplate with customizable options for UI library, Data fetching and others.",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"repository": "https://github.com/Imran-cse/nextjs-boilerplate",
+	"author": "Imran Hossain",
+	"license": "MIT",
+	"dependencies": {
+		"fs-extra": "^11.1.1",
+		"inquirer": "^9.2.8"
+	}
+}
