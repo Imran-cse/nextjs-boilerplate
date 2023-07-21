@@ -1,100 +1,42 @@
 #! /usr/bin/env node
 
-import inquirer from 'inquirer';
 import fs from 'fs-extra';
 import path from 'path';
 import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import chalk from 'chalk';
+import spinners from 'cli-spinners';
+import ora from 'ora';
+
+import { promptUser } from './prompt.js';
+import { emojis } from './constants.js';
+import {
+	colorfulMessage,
+	addConfigsToBoilerplate,
+	installAdditionalDependencies,
+} from './utils.js';
 
 // Get the path to the current directory
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-async function promptUser() {
-	return inquirer.prompt([
-		{
-			type: 'list',
-			name: 'apiType',
-			message: 'Which API type do you want to use?',
-			choices: ['GraphQL', 'REST'],
-		},
-		{
-			type: 'list',
-			name: 'dataFetchingLibrary',
-			message: 'Which data fetching library do you want to use?',
-			choices: ['SWR', 'React Query', 'None'],
-		},
-		{
-			type: 'list',
-			name: 'uiLibrary',
-			message: 'Which UI library do you want to use?',
-			choices: ['Radix', 'Chakra UI', 'Catalyst', 'None'],
-		},
-	]);
-}
+// Fun animations using cli-spinners
+const spinnerFrames = spinners.dots.frames;
+const spinner = ora({
+	text: chalk.cyan('🚀 Configuring your Next.js project...'),
+	spinner: {
+		interval: 80,
+		frames: spinnerFrames,
+	},
+});
 
-async function installAdditionalDependencies(targetDir, packageChoices) {
-	console.log('Installing additional dependencies...');
-	if (packageChoices.apiType === 'GraphQL') {
-		execSync(`npm install -D graphql`, {
-			cwd: targetDir,
-			stdio: 'inherit',
-		});
-	}
-
-	if (packageChoices.apiType === 'REST') {
-		execSync(`npm install -D axios`, {
-			cwd: targetDir,
-			stdio: 'inherit',
-		});
-	}
-
-	if (packageChoices.dataFetchingLibrary === 'SWR') {
-		execSync(`npm install swr`, {
-			cwd: targetDir,
-			stdio: 'inherit',
-		});
-	}
-
-	if (packageChoices.dataFetchingLibrary === 'React Query') {
-		execSync(`npm install -D react-query`, {
-			cwd: targetDir,
-			stdio: 'inherit',
-		});
-	}
-
-	// Install additional dependencies
-	execSync(`npm install -D prettier lint-staged husky`, {
-		cwd: targetDir,
-		stdio: 'inherit',
-	});
-}
-
-const configFiles = ['.lintstagedrc.js', '.prettierrc', '.prettierignore'];
-// Add more config file names as needed
-
-async function addConfigsToBoilerplate(projectDirectoryName) {
-	try {
-		for (const configFile of configFiles) {
-			const projectConfigPath = path.join(process.cwd(), projectDirectoryName, configFile);
-			const configData = path.join(__dirname, configFile);
-
-			await fs.copyFile(configData, projectConfigPath);
-		}
-
-		console.log('Config files added to the boilerplate successfully!');
-	} catch (error) {
-		console.error('Error while adding config files:', error);
-	}
-}
-
-async function createNextJsBoilerplate(targetDir) {
+async function createNextJsBoilerplate(targetDir, packageChoices) {
 	try {
 		// Install the latest version of Next.js on the fly
-		const packageChoices = await promptUser();
-
 		const initialFiles = await fs.readdir(process.cwd());
 
-		console.log('Installing the latest version of Next.js...');
+		console.log(`${emojis.rocket} Installing the latest version of Next.js... ${emojis.rocket}`);
+		spinner.start();
+
 		execSync(`npx create-next-app@latest`, {
 			cwd: targetDir,
 			stdio: 'inherit',
@@ -113,7 +55,12 @@ async function createNextJsBoilerplate(targetDir) {
 		await installAdditionalDependencies(newProjectDirectoryName, packageChoices);
 		await addConfigsToBoilerplate(newProjectDirectoryName);
 
-		console.log('Next.js boilerplate created successfully!');
+		spinner.stopAndPersist({ symbol: colorfulMessage(emojis.success) });
+		console.log(
+			chalk.cyan(
+				`${emojis.partyPopper} Next.js boilerplate created successfully! ${emojis.partyPopper}`
+			)
+		);
 		process.exit(0);
 	} catch (error) {
 		console.error('Error creating Next.js boilerplate:', error);
@@ -122,4 +69,7 @@ async function createNextJsBoilerplate(targetDir) {
 }
 
 // Run the CLI tool
-createNextJsBoilerplate(process.cwd());
+(async () => {
+	const response = await promptUser();
+	createNextJsBoilerplate(process.cwd(), response);
+})();
