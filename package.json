@@ -1,6 +1,6 @@
 {
   "name": "@imran03/nextjs-boilerplate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "Create a Next.js boilerplate with customizable options for UI library, Data fetching and others.",
   "main": "index.js",
