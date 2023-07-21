@@ -82,7 +82,6 @@ export async function checkFileExistsInDirectory(targetDir, fileName) {
     const filePath = path.join(directoryPath, fileName);
     fs.access(filePath, fs.constants.F_OK, (err) => {
       if (!err) {
-        console.log(`File ${fileName} exists in ${directoryPath}`);
         resolve(true);
       } else {
         console.log(`File ${fileName} does not exist in ${directoryPath}`);
